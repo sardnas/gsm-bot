@@ -9,6 +9,8 @@ public class Main {
     public static void main(String[] args) {
         Board board = new Board();
         Board.Color[][] initialBoard = board.getBoard();
+
+
         for(int i = 0; i < initialBoard.length; i++){
             for(int j = 0; j < initialBoard.length; j++){
                 System.out.print(initialBoard[i][j]);
