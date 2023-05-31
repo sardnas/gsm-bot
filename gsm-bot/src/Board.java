@@ -6,7 +6,7 @@ public class Board {
         U,
         G,
         B,
-        CLEAR
+        O
     }
 
     Color[][] board = new Color[11][11];
@@ -53,29 +53,45 @@ public class Board {
 
     }
 
+    private boolean validCoordinate(int[] coordinate){
+        if(coordinate[0] < 0 || coordinate[0] > 10 || coordinate[1] < 0 || coordinate[1] > 10){
+            return false;
+        }
+        return true;
+    }
     // LÄS PÅ OM REKURSIV PROGRAMMERING HÄR ANNARS BLIR DET FEEEEEL
     private void clearNeighbours(Color color, int[] coordinates, Color[][] board){
-        if(board[coordinates[0]][coordinates[1]] == Color.CLEAR){
-            return;
-        }else if(board[coordinates[0]][coordinates[1]] == color){
+        if(board[coordinates[0]][coordinates[1]] == color){
             int[] newCoord = new int[2];
-            board[coordinates[0]][coordinates[1]] = Color.CLEAR;
+            board[coordinates[0]][coordinates[1]] = Color.O;
 
-            newCoord[0] = coordinates[0] -1;
-            newCoord[1] = coordinates[1] -1; // MATTE!!!
-            clearNeighbours(color, newCoord, board);
+            // over
+            newCoord[0] = coordinates[0] - 1;
+            newCoord[1] = coordinates[1];
+            if(validCoordinate(newCoord)){
+                clearNeighbours(color, newCoord, board);
+            }
 
-            newCoord[0] = coordinates[0] -1;
-            newCoord[1] = coordinates[1] -1; // MATTE!!!
-            clearNeighbours(color, newCoord, board);
+            // under
+            newCoord[0] = coordinates[0] + 1;
+            newCoord[1] = coordinates[1];
+            if(validCoordinate(newCoord)){
+                clearNeighbours(color, newCoord, board);
+            }
 
-            newCoord[0] = coordinates[0] -1;
-            newCoord[1] = coordinates[1] -1; // MATTE!!!
-            clearNeighbours(color, newCoord, board);
+            // left
+            newCoord[0] = coordinates[0];
+            newCoord[1] = coordinates[1] - 1;
+            if(validCoordinate(newCoord)){
+                clearNeighbours(color, newCoord, board);
+            }
 
-            newCoord[0] = coordinates[0] -1;
-            newCoord[1] = coordinates[1] -1; // MATTE!!!
-            clearNeighbours(color, newCoord, board);
+            // right
+            newCoord[0] = coordinates[0];
+            newCoord[1] = coordinates[1] + 1;
+            if(validCoordinate(newCoord)){
+                clearNeighbours(color, newCoord, board);
+            }
         }
     }
 }
