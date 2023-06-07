@@ -11,7 +11,6 @@ public class Main {
         Board board = new Board();
         Board.Color[][] initialBoard = board.getBoard();
 
-
         for(int i = 0; i < initialBoard.length; i++){
             for(int j = 0; j < initialBoard.length; j++){
                 System.out.print(initialBoard[i][j]);
@@ -31,7 +30,7 @@ public class Main {
         coordinates[0] = x;
         coordinates[1] = y;
 
-        board.setBoard(initialBoard, coordinates);
+        board.setBoard(coordinates);
 
         for(int i = 0; i < board.getBoard().length; i++){
             for(int j = 0; j < board.getBoard().length; j++){

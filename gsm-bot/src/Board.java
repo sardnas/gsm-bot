@@ -24,33 +24,67 @@ public class Board {
     }
 
     public Color[][] getBoard() {
-        return board;
+        return this.board;
     }
 
-    public void setBoard(Color[][] board, int[] coordinates) {
-        switch(board[coordinates[0]][coordinates[1]]) {
+    public void setBoard(int[] coordinates) {
+        switch(this.board[coordinates[0]][coordinates[1]]) {
             case P:
-                clearNeighbours(Color.P, coordinates, board);
+                clearNeighbours(Color.P, coordinates, this.board);
                 break;
             case U:
-                clearNeighbours(Color.U, coordinates, board);
+                clearNeighbours(Color.U, coordinates, this.board);
                 break;
             case G:
-                clearNeighbours(Color.G, coordinates, board);
+                clearNeighbours(Color.G, coordinates, this.board);
                 break;
             case B:
-                clearNeighbours(Color.B, coordinates, board);
+                clearNeighbours(Color.B, coordinates, this.board);
                 break;
             default:
                 break;
         }
-
-        this.board = board;
         calculateNewBoard();
     }
 
     private void calculateNewBoard(){
+        moveDown();
+        moveRight();
+    }
 
+    private void moveDown(){
+        Color[][] boardCopy = this.board;
+        for(int i = 0; i < boardCopy.length - 1; i++){
+            for(int j = 0; j < boardCopy.length; j++){
+                if(boardCopy[boardCopy.length - i -1][j] == Color.O){
+                    boardCopy[boardCopy.length - i -1][j] = boardCopy[boardCopy.length - i][j];
+                    boardCopy[boardCopy.length - i][j] = Color.O;
+                }
+            }
+        }
+
+        this.board = boardCopy;
+    }
+
+    private void moveRight(){
+        Color[][] boardCopy = this.board;
+        for(int i = 0; i < boardCopy.length; i++) {
+            if (boardCopy[boardCopy.length - 1][i] == Color.O) {
+                boardCopy = moveRightHelper(i);
+            }
+        }
+        this.board = boardCopy;
+    }
+
+    private Color[][] moveRightHelper(int xCoordinate){
+        Color[][] boardCopy = this.board;
+        for(int i = xCoordinate; i < 1; i--){
+            for(int j = 0; 0 < boardCopy.length; i++){
+                boardCopy[j][i] = boardCopy[j][i - 1];
+                boardCopy[j][i - 1] = Color.O;
+            }
+        }
+        return boardCopy;
     }
 
     private boolean validCoordinate(int[] coordinate){
@@ -59,38 +93,38 @@ public class Board {
         }
         return true;
     }
-    // LÄS PÅ OM REKURSIV PROGRAMMERING HÄR ANNARS BLIR DET FEEEEEL
-    private void clearNeighbours(Color color, int[] coordinates, Color[][] board){
-        if(board[coordinates[0]][coordinates[1]] == color){
+
+    private void clearNeighbours(Color color, int[] coordinates, Color[][] boardCopy){
+        if(boardCopy[coordinates[0]][coordinates[1]] == color){
             int[] newCoord = new int[2];
-            board[coordinates[0]][coordinates[1]] = Color.O;
+            boardCopy[coordinates[0]][coordinates[1]] = Color.O;
 
             // over
             newCoord[0] = coordinates[0] - 1;
             newCoord[1] = coordinates[1];
             if(validCoordinate(newCoord)){
-                clearNeighbours(color, newCoord, board);
+                clearNeighbours(color, newCoord, boardCopy);
             }
 
             // under
             newCoord[0] = coordinates[0] + 1;
             newCoord[1] = coordinates[1];
             if(validCoordinate(newCoord)){
-                clearNeighbours(color, newCoord, board);
+                clearNeighbours(color, newCoord, boardCopy);
             }
 
             // left
             newCoord[0] = coordinates[0];
             newCoord[1] = coordinates[1] - 1;
             if(validCoordinate(newCoord)){
-                clearNeighbours(color, newCoord, board);
+                clearNeighbours(color, newCoord, boardCopy);
             }
 
             // right
             newCoord[0] = coordinates[0];
             newCoord[1] = coordinates[1] + 1;
             if(validCoordinate(newCoord)){
-                clearNeighbours(color, newCoord, board);
+                clearNeighbours(color, newCoord, boardCopy);
             }
         }
     }
