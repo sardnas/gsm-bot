@@ -60,21 +60,21 @@ public class Board {
         }
 
         for (int j = 0; j < boardCopy[0].length; j++) {
-            int emptyRow = 0; // Track the empty row position
+            int emptyRow = boardCopy.length - 1;  // Track the empty row position
 
-            // Iterate from top to bottom
-            for (int i = 0; i < boardCopy.length; i++) {
+            // Iterate from bottom to top
+            for (int i = boardCopy.length - 1; i >= 0; i--) {
                 if (boardCopy[i][j] != Color.O) {
                     // Move the non-empty cell to the empty row
                     boardCopy[emptyRow][j] = boardCopy[i][j];
-                    emptyRow++;
+                    emptyRow--;
                 }
             }
 
             // Fill the remaining empty cells with Color.O
-            while (emptyRow < boardCopy.length) {
+            while (emptyRow >= 0) {
                 boardCopy[emptyRow][j] = Color.O;
-                emptyRow++;
+                emptyRow--;
             }
         }
 
