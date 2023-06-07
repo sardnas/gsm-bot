@@ -1,4 +1,5 @@
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.Arrays;
 
 public class Board {
     enum Color {
@@ -49,17 +50,31 @@ public class Board {
 
     private void calculateNewBoard(){
         moveDown();
-        moveRight();
+        //moveRight();
     }
 
     private void moveDown(){
-        Color[][] boardCopy = this.board;
-        for(int i = 0; i < boardCopy.length - 1; i++){
-            for(int j = 0; j < boardCopy.length; j++){
-                if(boardCopy[boardCopy.length - i -1][j] == Color.O){
-                    boardCopy[boardCopy.length - i -1][j] = boardCopy[boardCopy.length - i][j];
-                    boardCopy[boardCopy.length - i][j] = Color.O;
+        Color[][] boardCopy = new Color[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            boardCopy[i] = Arrays.copyOf(board[i], board[i].length);
+        }
+
+        for (int j = 0; j < boardCopy[0].length; j++) {
+            int emptyRow = 0; // Track the empty row position
+
+            // Iterate from top to bottom
+            for (int i = 0; i < boardCopy.length; i++) {
+                if (boardCopy[i][j] != Color.O) {
+                    // Move the non-empty cell to the empty row
+                    boardCopy[emptyRow][j] = boardCopy[i][j];
+                    emptyRow++;
                 }
+            }
+
+            // Fill the remaining empty cells with Color.O
+            while (emptyRow < boardCopy.length) {
+                boardCopy[emptyRow][j] = Color.O;
+                emptyRow++;
             }
         }
 
@@ -67,7 +82,10 @@ public class Board {
     }
 
     private void moveRight(){
-        Color[][] boardCopy = this.board;
+        Color[][] boardCopy = new Color[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            boardCopy[i] = Arrays.copyOf(board[i], board[i].length);
+        }
         for(int i = 0; i < boardCopy.length; i++) {
             if (boardCopy[boardCopy.length - 1][i] == Color.O) {
                 boardCopy = moveRightHelper(i);
@@ -77,7 +95,11 @@ public class Board {
     }
 
     private Color[][] moveRightHelper(int xCoordinate){
-        Color[][] boardCopy = this.board;
+        Color[][] boardCopy = new Color[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            boardCopy[i] = Arrays.copyOf(board[i], board[i].length);
+        }
+
         for(int i = xCoordinate; i < 1; i--){
             for(int j = 0; 0 < boardCopy.length; i++){
                 boardCopy[j][i] = boardCopy[j][i - 1];
