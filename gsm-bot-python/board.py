@@ -8,10 +8,12 @@ vec = pygame.math.Vector2
 class board(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((50, 50))
+        #self.image = pygame.Surface((50, 50))
         #self.image.fill((246, 224, 210))  # the color
         self.board = self.createBoard()
 
+    def getBoard(self):
+        return self.board
     def updateBoard(self, coordinate):
         if self.board[coordinate[0]][coordinate[1]] == 1:
             self.clearNeighbours(1, coordinate, True)
@@ -54,6 +56,7 @@ class board(pygame.sprite.Sprite):
         return board_copy
 
     def createBoard(self):
+        print(random.choice([1, 2, 3, 4], size=(11, 11)))
         return random.choice([1, 2, 3, 4], size=(11, 11))
 
     def validCoord(self, coordinate):
