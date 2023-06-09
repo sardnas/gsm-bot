@@ -7,5 +7,51 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="lwjgl-cuda-sources" level="project" />
+    <orderEntry type="library" name="lwjgl-egl-sources" level="project" />
+    <orderEntry type="library" name="lwjgl-egl-sources1" level="project" />
+    <orderEntry type="library" name="lwjgl-fmod-sources" level="project" />
+    <orderEntry type="library" name="lwjgl-freetype-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-glfw-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-harfbuzz-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-hwloc-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-jawt-sources" level="project" />
+    <orderEntry type="library" name="lwjgl-jemalloc-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-ktx-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-libdivide-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-llvm-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-lmdb-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-lz4-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-meow-natives-linux-arm64" level="project" />
+    <orderEntry type="library" name="lwjgl-meshoptimizer-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-nanovg-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-nfd-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-nuklear-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-odbc-sources" level="project" />
+    <orderEntry type="library" name="lwjgl-openal-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-opencl-sources" level="project" />
+    <orderEntry type="library" name="lwjgl-opengl-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-opengles-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-openvr-natives-linux" level="project" />
+    <orderEntry type="library" name="lwjgl-openxr-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-opus-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-ovr-natives-windows-x86" level="project" />
+    <orderEntry type="library" name="lwjgl-par-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-remotery-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-rpmalloc-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-shaderc-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-spvc-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-sse-natives-linux" level="project" />
+    <orderEntry type="library" name="lwjgl-stb-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-tinyexr-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-tinyfd-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-tootle-natives-linux" level="project" />
+    <orderEntry type="library" name="lwjgl-vma-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-vulkan-natives-macos-arm64" level="project" />
+    <orderEntry type="library" name="lwjgl-xxhash-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-yoga-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-zstd-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-natives-linux-arm32" level="project" />
+    <orderEntry type="library" name="lwjgl-assimp-natives-linux-arm32" level="project" />
   </component>
 </module>

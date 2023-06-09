@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="lwjgl-xxhash-natives-linux-arm32">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-xxhash/lwjgl-xxhash-natives-linux-arm32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-xxhash/lwjgl-xxhash-natives-linux-arm64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-xxhash/lwjgl-xxhash-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-xxhash/lwjgl-xxhash-natives-macos-arm64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-xxhash/lwjgl-xxhash-natives-macos.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-xxhash/lwjgl-xxhash-natives-windows-arm64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-xxhash/lwjgl-xxhash-natives-windows-x86.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-xxhash/lwjgl-xxhash-natives-windows.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-xxhash/lwjgl-xxhash.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-xxhash/lwjgl-xxhash-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

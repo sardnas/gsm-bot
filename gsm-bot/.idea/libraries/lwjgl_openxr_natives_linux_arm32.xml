@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="lwjgl-openxr-natives-linux-arm32">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-openxr/lwjgl-openxr-natives-linux-arm32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-openxr/lwjgl-openxr-natives-linux-arm64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-openxr/lwjgl-openxr-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-openxr/lwjgl-openxr-natives-windows-arm64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-openxr/lwjgl-openxr-natives-windows-x86.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-openxr/lwjgl-openxr-natives-windows.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-openxr/lwjgl-openxr.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-openxr/lwjgl-openxr-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

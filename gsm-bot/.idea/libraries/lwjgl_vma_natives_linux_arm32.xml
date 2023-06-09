@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="lwjgl-vma-natives-linux-arm32">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-vma/lwjgl-vma-natives-linux-arm32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-vma/lwjgl-vma-natives-linux-arm64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-vma/lwjgl-vma-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-vma/lwjgl-vma-natives-macos-arm64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-vma/lwjgl-vma-natives-macos.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-vma/lwjgl-vma-natives-windows-arm64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-vma/lwjgl-vma-natives-windows-x86.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-vma/lwjgl-vma-natives-windows.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-vma/lwjgl-vma.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-vma/lwjgl-vma-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

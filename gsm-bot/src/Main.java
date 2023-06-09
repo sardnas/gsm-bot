@@ -1,6 +1,18 @@
 import java.awt.*;
 import java.util.Random;
 import java.util.Scanner;
+import org.lwjgl.*;
+import org.lwjgl.glfw.*;
+import org.lwjgl.opengl.*;
+import org.lwjgl.system.*;
+
+import java.nio.*;
+
+import static org.lwjgl.glfw.Callbacks.*;
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryStack.*;
+import static org.lwjgl.system.MemoryUtil.*;
 
 public class Main {
     public static final int FIVE_SECONDS = 5000;
@@ -10,7 +22,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Board board = new Board();
         Board.Color[][] initialBoard = board.getBoard();
-
+/*
         for(int i = 0; i < initialBoard.length; i++){
             for(int j = 0; j < initialBoard.length; j++){
                 System.out.print(initialBoard[i][j]);
@@ -40,7 +52,13 @@ public class Main {
             System.out.print("\n");
         }
 
+*/
+    }
 
+    private static void GameLoop() throws Exception {
+        while(true){
+
+        }
     }
 
    private static void MouseMover() throws Exception {

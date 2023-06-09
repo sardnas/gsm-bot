@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="lwjgl-hwloc-natives-linux-arm32">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-hwloc/lwjgl-hwloc-natives-linux-arm32.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-hwloc/lwjgl-hwloc-natives-linux-arm64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-hwloc/lwjgl-hwloc-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-hwloc/lwjgl-hwloc-natives-macos-arm64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-hwloc/lwjgl-hwloc-natives-macos.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-hwloc/lwjgl-hwloc-natives-windows-arm64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-hwloc/lwjgl-hwloc-natives-windows-x86.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-hwloc/lwjgl-hwloc-natives-windows.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-hwloc/lwjgl-hwloc.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../../lwjgl/lwjgl-hwloc/lwjgl-hwloc-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
