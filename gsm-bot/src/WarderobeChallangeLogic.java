@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Arrays;
 
-public class Board {
+public class WarderobeChallangeLogic {
     enum Color {
         PINK,
         PURPLE,
@@ -16,7 +16,7 @@ public class Board {
     Color[][] initialBoard;
     int[] initialColorCount;
 
-    public Board(){
+    public WarderobeChallangeLogic(){
         Color[] initialValues = new Color[4];
         initialValues[0] = Color.PINK;
         initialValues[1] = Color.PURPLE;
@@ -56,13 +56,6 @@ public class Board {
         }
     }
 
-    public boolean clickableCoordinate(int[] coordinates){
-        if(board[coordinates[0]][coordinates[1]] == Color.CLEAR){
-            return false;
-        }else{
-            return true;
-        }
-    }
 
     public ArrayList<int[]> getClickableCoordinates(){
         ArrayList<int[]> clickableList = new ArrayList<>();

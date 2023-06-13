@@ -1,15 +1,13 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        System.out.print("WELCOME TO GSM BOT!");
-        Board board = new Board();
-        GsmBot bot = new GsmBot(board);
-        ArrayList<int[]> solutionMoves = bot.getSolutionMoves();
+        WarderobeChallangeLogic board = new WarderobeChallangeLogic();
+        SolutionAlgorithm solutionAlgorithm = new SolutionAlgorithm(board);
+        ArrayList<int[]> solutionMoves = solutionAlgorithm.getSolutionMoves();
 /*
         board.resetBoard();
         for (int[] coordinate : solutionMoves ) {
@@ -41,8 +39,8 @@ public class Main {
 
     private static void GameLoop() throws Exception {
         boolean running = true;
-        Board board = new Board();
-        Board.Color[][] initialBoard = board.getBoard();
+        WarderobeChallangeLogic board = new WarderobeChallangeLogic();
+        WarderobeChallangeLogic.Color[][] initialBoard = board.getBoard();
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         int x;
         int y;

@@ -1,79 +1,48 @@
-import java.util.ArrayList;
-import java.util.Random;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+import javax.imageio.ImageIO;
+
 
 public class GsmBot {
-    public static final int MAX = 10;
+    public static final long serialVersionUID = 1L;
+    public GsmBot(){
 
-    Board board;
-    int invalidClickCount = 0;
-
-    public GsmBot(Board inputBoard){
-        board = inputBoard;
     }
 
-    public ArrayList<int[]> getSolutionMoves(){
-        return solutionAlgorithm();
+    public void takeScreenShot() throws InterruptedException, AWTException {
+        Robot robot = new Robot();
+        Rectangle capture = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+        BufferedImage image = robot.createScreenCapture(capture);
     }
 
-    private ArrayList<int[]> solutionAlgorithm(){
-        int[] randomCoordinates;
-        ArrayList<int[]> moves = new ArrayList();
-        while(true){
-            randomCoordinates = getRandomCoordinates();
-            if(randomCoordinates[0] < 50){
-                board.setBoard(randomCoordinates);
-                moves.add(randomCoordinates);
-                if(board.checkForLose()){
-                    printBoard();
-                    board.resetBoard();
-                    moves.clear();
-                }
-                if(board.checkForWin()){
-                    printBoard();
-                    return moves;
-                }
-            }else{
-                printBoard();
-                board.resetBoard();
-                moves.clear();
+    private void findGameBoard(BufferedImage screenShotImage) throws IOException {
+        BufferedImage pinkBubble = null;
+        pinkBubble = ImageIO.read(new File("pinkBubble.jpg"));
+
+        BufferedImage purpleBubble = null;
+        purpleBubble = ImageIO.read(new File("purpleBubble.jpg"));
+
+        BufferedImage greenBubble = null;
+        greenBubble = ImageIO.read(new File("greenBubble.jpg"));
+
+        BufferedImage blueBubble = null;
+        blueBubble = ImageIO.read(new File("blueBubble.jpg"));
+        
+        int maxHeight = screenShotImage.getHeight()/10;
+        int maxWidth = screenShotImage.getWidth()/10;
+        for(int i = 0; i < maxHeight; i++){
+            for(int j = 0; j < maxWidth; j++){
+                int[] rgbArray = new int[100];
+                screenShotImage.getRGB(i*10, j*10,10,10, rgbArray, 0, 0);
             }
         }
+
     }
 
-    private void printBoard(){
-        for(int i = 0; i < board.getBoard().length; i++) {
-            for (int j = 0; j < board.getBoard().length; j++) {
-                System.out.print(board.getBoard()[i][j]);
-                System.out.print("-");
-                System.out.print(i);
-                System.out.print(",");
-                System.out.print(j);
-                System.out.print("      ");
-            }
-            System.out.print("\n");
-            System.out.print("\n");
-        }
-        System.out.println("########################################################");
+    private WarderobeChallangeLogic.Color[][] createGameBoard(){
+
     }
-
-    private int[] getRandomCoordinates(){
-        /*
-        Random random = new Random();
-        int[] randomCoordinates = new int[2];
-        randomCoordinates[0] = random.nextInt(MAX);
-        randomCoordinates[1] = random.nextInt(MAX);
-
-         */
-        Random random = new Random();
-        ArrayList<int[]> clickableList = board.getClickableCoordinates();
-        int[] randomCoordinates = new int[2];
-        if(!clickableList.isEmpty()) {
-            randomCoordinates = clickableList.get(random.nextInt(clickableList.size()));
-        }else{
-            randomCoordinates[0] = 100;
-            randomCoordinates[1] = 100;
-        }
-        return randomCoordinates;
-    }
-
 }
