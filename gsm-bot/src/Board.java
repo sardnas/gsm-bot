@@ -1,27 +1,155 @@
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Arrays;
 
 public class Board {
     enum Color {
-        P,
-        U,
-        G,
-        B,
-        O
+        PINK,
+        PURPLE,
+        GREEN,
+        BLUE,
+        CLEAR
     }
 
     Color[][] board = new Color[11][11];
+    int[] colorCounter;
+    Color[][] initialBoard;
+    int[] initialColorCount;
+
     public Board(){
         Color[] initialValues = new Color[4];
-        initialValues[0] = Color.P;
-        initialValues[1] = Color.U;
-        initialValues[2] = Color.G;
-        initialValues[3] = Color.B;
+        initialValues[0] = Color.PINK;
+        initialValues[1] = Color.PURPLE;
+        initialValues[2] = Color.GREEN;
+        initialValues[3] = Color.BLUE;
         for(int i = 0; i < board.length; i++){
             for(int j = 0; j < board.length; j++){
                 board[i][j] = initialValues[ThreadLocalRandom.current().nextInt(0, 4)];
             }
         }
+        initialBoard = copyOfCurrentBoard();
+        colorCounter = countColors(board);
+        initialColorCount = countColors(board);
+    }
+
+    public void resetBoard(){
+        board = initialBoard;
+        board = copyOfCurrentBoard();
+        for(int i = 0; i < colorCounter.length; i++){
+            colorCounter[i] = initialColorCount[i];
+        }
+    }
+
+    public boolean checkForWin(){
+        if(colorCounter[0] == 0 && colorCounter[1] == 0 && colorCounter[2] == 0 && colorCounter[3] == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean checkForLose(){
+        if(colorCounter[0] == 1 || colorCounter[1] == 1 || colorCounter[2] == 1 || colorCounter[3] == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public boolean clickableCoordinate(int[] coordinates){
+        if(board[coordinates[0]][coordinates[1]] == Color.CLEAR){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public ArrayList<int[]> getClickableCoordinates(){
+        ArrayList<int[]> clickableList = new ArrayList<>();
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board.length; j++){
+                if(board[i][j] != Color.CLEAR){
+                    // over
+                    int[] newCoordOne = new int[2];
+                    newCoordOne[0] = i - 1;
+                    newCoordOne[1] = j;
+                    if(validCoordinate(newCoordOne) && board[newCoordOne[0]][newCoordOne[1]] == board[i][j]){
+                        clickableList.add(newCoordOne);
+                        continue;
+                    }
+
+                    // under
+                    int[] newCoordTwo = new int[2];
+                    newCoordTwo[0] = i + 1;
+                    newCoordTwo[1] = j;
+                    if(validCoordinate(newCoordTwo) && board[newCoordTwo[0]][newCoordTwo[1]] == board[i][j]){
+                        clickableList.add(newCoordTwo);
+                        continue;
+                    }
+
+                    // left
+                    int[] newCoordThree = new int[2];
+                    newCoordThree[0] = i;
+                    newCoordThree[1] = j - 1;
+                    if(validCoordinate(newCoordThree) && board[newCoordThree[0]][newCoordThree[1]] == board[i][j]){
+                        clickableList.add(newCoordThree);
+                        continue;
+                    }
+
+                    // right
+                    int[] newCoordFour = new int[2];
+                    newCoordFour[0] = i;
+                    newCoordFour[1] = j + 1;
+                    if(validCoordinate(newCoordFour) && board[newCoordFour[0]][newCoordFour[1]] == board[i][j]){
+                        clickableList.add(newCoordFour);
+                    }
+                }
+            }
+        }
+
+        return clickableList;
+    }
+
+    private int[] countColors(Color[][] board){
+        int[] colors = new int[4];
+        int pinkCount = 0;
+        int purpleCount = 0;
+        int greenCount = 0;
+        int blueCount = 0;
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board.length; j++){
+                switch(this.board[i][j]) {
+                    case PINK:
+                        pinkCount++;
+                        break;
+                    case PURPLE:
+                        purpleCount++;
+                        break;
+                    case GREEN:
+                        greenCount++;
+                        break;
+                    case BLUE:
+                        blueCount++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        colors[0] = pinkCount;
+        colors[1] = purpleCount;
+        colors[2] = greenCount;
+        colors[3] = blueCount;
+
+        return colors;
+    }
+
+    private Color[][] copyOfCurrentBoard(){
+        Color[][] boardCopy = new Color[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            boardCopy[i] = Arrays.copyOf(board[i], board[i].length);
+        }
+        return boardCopy;
     }
 
     public Color[][] getBoard() {
@@ -30,41 +158,34 @@ public class Board {
 
     public void setBoard(int[] coordinates) {
         switch(this.board[coordinates[0]][coordinates[1]]) {
-            case P:
-                clearNeighbours(Color.P, coordinates, this.board);
+            case PINK:
+                clearNeighbours(Color.PINK, coordinates, this.board, true);
                 break;
-            case U:
-                clearNeighbours(Color.U, coordinates, this.board);
+            case PURPLE:
+                clearNeighbours(Color.PURPLE, coordinates, this.board, true);
                 break;
-            case G:
-                clearNeighbours(Color.G, coordinates, this.board);
+            case GREEN:
+                clearNeighbours(Color.GREEN, coordinates, this.board, true);
                 break;
-            case B:
-                clearNeighbours(Color.B, coordinates, this.board);
+            case BLUE:
+                clearNeighbours(Color.BLUE, coordinates, this.board, true);
                 break;
             default:
                 break;
         }
-        calculateNewBoard();
-    }
-
-    private void calculateNewBoard(){
         moveDown();
-        //moveRight();
+        moveRight();
     }
 
     private void moveDown(){
-        Color[][] boardCopy = new Color[board.length][board[0].length];
-        for (int i = 0; i < board.length; i++) {
-            boardCopy[i] = Arrays.copyOf(board[i], board[i].length);
-        }
+        Color[][] boardCopy = copyOfCurrentBoard();
 
         for (int j = 0; j < boardCopy[0].length; j++) {
             int emptyRow = boardCopy.length - 1;  // Track the empty row position
 
             // Iterate from bottom to top
             for (int i = boardCopy.length - 1; i >= 0; i--) {
-                if (boardCopy[i][j] != Color.O) {
+                if (boardCopy[i][j] != Color.CLEAR) {
                     // Move the non-empty cell to the empty row
                     boardCopy[emptyRow][j] = boardCopy[i][j];
                     emptyRow--;
@@ -73,7 +194,7 @@ public class Board {
 
             // Fill the remaining empty cells with Color.O
             while (emptyRow >= 0) {
-                boardCopy[emptyRow][j] = Color.O;
+                boardCopy[emptyRow][j] = Color.CLEAR;
                 emptyRow--;
             }
         }
@@ -82,30 +203,35 @@ public class Board {
     }
 
     private void moveRight(){
-        Color[][] boardCopy = new Color[board.length][board[0].length];
-        for (int i = 0; i < board.length; i++) {
-            boardCopy[i] = Arrays.copyOf(board[i], board[i].length);
-        }
+        Color[][] boardCopy = copyOfCurrentBoard();
+        ArrayList<Integer> emptyColumnCounter = new ArrayList();
+
         for(int i = 0; i < boardCopy.length; i++) {
-            if (boardCopy[boardCopy.length - 1][i] == Color.O) {
-                boardCopy = moveRightHelper(i);
+            if (boardCopy[boardCopy.length - 1][i] == Color.CLEAR) {
+                emptyColumnCounter.add(i);
             }
         }
+        for (int colummn : emptyColumnCounter) {
+            boardCopy = moveRightHelper(colummn);
+        }
+
         this.board = boardCopy;
     }
 
     private Color[][] moveRightHelper(int xCoordinate){
-        Color[][] boardCopy = new Color[board.length][board[0].length];
-        for (int i = 0; i < board.length; i++) {
-            boardCopy[i] = Arrays.copyOf(board[i], board[i].length);
-        }
+        Color[][] boardCopy = copyOfCurrentBoard();
 
-        for(int i = xCoordinate; i < 1; i--){
-            for(int j = 0; 0 < boardCopy.length; i++){
-                boardCopy[j][i] = boardCopy[j][i - 1];
-                boardCopy[j][i - 1] = Color.O;
+        for(int i = 0; i < boardCopy.length; i++){
+            for(int j = 0; j < xCoordinate; j++){
+                boardCopy[i][j] = Color.CLEAR;
             }
         }
+        for(int i = 0; i < boardCopy.length; i++){
+            for(int j = 0; j < xCoordinate; j++){
+                boardCopy[i][j + 1] = board[i][j];
+            }
+        }
+
         return boardCopy;
     }
 
@@ -116,37 +242,55 @@ public class Board {
         return true;
     }
 
-    private void clearNeighbours(Color color, int[] coordinates, Color[][] boardCopy){
-        if(boardCopy[coordinates[0]][coordinates[1]] == color){
+    private void clearNeighbours(Color color, int[] coordinates, Color[][] currentBoard, boolean firstIteration){
+        if(currentBoard[coordinates[0]][coordinates[1]] == color){
             int[] newCoord = new int[2];
-            boardCopy[coordinates[0]][coordinates[1]] = Color.O;
 
+            if(!firstIteration){
+                currentBoard[coordinates[0]][coordinates[1]] = Color.CLEAR;
+                switch(color) {
+                    case PINK:
+                        colorCounter[0]--;
+                        break;
+                    case PURPLE:
+                        colorCounter[1]--;
+                        break;
+                    case GREEN:
+                        colorCounter[2]--;
+                        break;
+                    case BLUE:
+                        colorCounter[3]--;
+                        break;
+                    default:
+                        break;
+                }
+            }
             // over
             newCoord[0] = coordinates[0] - 1;
             newCoord[1] = coordinates[1];
             if(validCoordinate(newCoord)){
-                clearNeighbours(color, newCoord, boardCopy);
+                clearNeighbours(color, newCoord, currentBoard, false);
             }
 
             // under
             newCoord[0] = coordinates[0] + 1;
             newCoord[1] = coordinates[1];
             if(validCoordinate(newCoord)){
-                clearNeighbours(color, newCoord, boardCopy);
+                clearNeighbours(color, newCoord, currentBoard, false);
             }
 
             // left
             newCoord[0] = coordinates[0];
             newCoord[1] = coordinates[1] - 1;
             if(validCoordinate(newCoord)){
-                clearNeighbours(color, newCoord, boardCopy);
+                clearNeighbours(color, newCoord, currentBoard, false);
             }
 
             // right
             newCoord[0] = coordinates[0];
             newCoord[1] = coordinates[1] + 1;
             if(validCoordinate(newCoord)){
-                clearNeighbours(color, newCoord, boardCopy);
+                clearNeighbours(color, newCoord, currentBoard, false);
             }
         }
     }

@@ -6,26 +6,25 @@ from numpy import random
 vec = pygame.math.Vector2
 
 class board(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, newBoard):
         pygame.sprite.Sprite.__init__(self)
         #self.image = pygame.Surface((50, 50))
         #self.image.fill((246, 224, 210))  # the color
-        self.board = self.createBoard()
-        self.pink = -1
-        self.purple = -1
-        self.blue = -1
-        self.green = -1
-        self.validInput = True
-        self.initialBoard
+        self.board = self.createBoard(newBoard)
+        self.pink
+        self.purple
+        self.blue
+        self.green
+        #self.initialColors
 
     def getBoard(self):
         return self.board
 
-    def getValidInput(self):
-        return self.validInput
-
-    def undoBoard(self):
-        self.board = self.initialBoard
+    def isEmpty(self, xy):
+        if self.board[xy[0]][xy[1]] == 0:
+            return True
+        else:
+            return False
 
     def checkForWin(self):
         if self.pink == 0 and self.purple == 0 and self.blue == 0 and self.green == 0:
@@ -34,6 +33,8 @@ class board(pygame.sprite.Sprite):
             return False
     def checkForLose(self):
         if self.pink == 1 or self.purple == 1 or self.blue == 1 or self.green == 1:
+            outputString = "[Pink count: {} Purple count: {} Blue count: {} Green count: {}]".format(self.pink, self.purple, self.blue, self.green)
+            print(outputString)
             return True
         else:
             return False
@@ -48,17 +49,18 @@ class board(pygame.sprite.Sprite):
             self.clearNeighbours(4, coordinate, True)
         else:
             print("Please choose correct value")
-            self.validInput = False
             return
 
         self.board = self.moveDown()
         self.board = self.moveRight()
+        #outputString = "[UPDATE BOARD Pink count: {} Purple count: {} Blue count: {} Green count: {}]".format(self.pink, self.purple, self.blue, self.green)
+        #print(outputString)
 
     def moveDown(self):
         board_copy = [[None] * len(self.board[0]) for _ in range(len(self.board))]  # Create a copy of the board
 
         for i in range(len(self.board)):
-            board_copy[i] = self.board[i].copy()  # Copy each row of the board
+            board_copy[i] = self.board[i].copy()
 
         for j in range(len(board_copy[0])):
             empty_row = len(board_copy) - 1  # Track the empty row position
@@ -104,8 +106,7 @@ class board(pygame.sprite.Sprite):
 
         return board_copy
 
-    def createBoard(self):
-        newBoard = random.choice([1, 2, 3, 4], size=(11, 11))
+    def createBoard(self, newBoard):
         pink = 0
         purple = 0
         blue = 0
@@ -120,11 +121,13 @@ class board(pygame.sprite.Sprite):
                     blue = blue + 1
                 elif newBoard[i][j] == 4:
                     green = green + 1
-        self.initialBoard = newBoard
         self.pink = pink
         self.purple = purple
         self.blue = blue
         self.green = green
+        #self.initialColors = [pink, purple, blue, green]
+        #print(self.initialColors)
+
         return newBoard
 
     def validCoord(self, coordinate):
@@ -135,17 +138,16 @@ class board(pygame.sprite.Sprite):
 
     def clearNeighbours(self, value, coordinate, firstCheck):
         if self.board[coordinate[0]][coordinate[1]] == value:
-            self.validInput = not firstCheck
             if not firstCheck:
                 self.board[coordinate[0]][coordinate[1]] = 0
                 if value == 1:
-                    self.pink = self.pink-1
+                    self.pink = self.pink - 1
                 elif value == 2:
-                    self.purple = self.purple-1
+                    self.purple = self.purple - 1
                 elif value == 3:
-                    self.blue = self.blue-1
+                    self.blue = self.blue - 1
                 elif value == 4:
-                    self.green = self.green-1
+                    self.green = self.green - 1
 
             #over
             newCoord = [coordinate[0] - 1, coordinate[1]]

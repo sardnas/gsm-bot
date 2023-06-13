@@ -1,15 +1,19 @@
 import pygame
+import random
+from numpy import random
 from board import board
 from settings import size, FPS, PINK, PURPLE, BLUE, GREEN, CLEAR
-import random
+
 # initialize pygame and create window
 pygame.init()
 screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 
 # init board
-gameBoard = board()
-
+newBoard = random.choice([1, 2, 3, 4], size=(11, 11))
+gameBoard = board(newBoard)
+initialBoard = gameBoard.getBoard()
+print(initialBoard)
 def game_loop():
     running = True
     while running:
@@ -70,24 +74,28 @@ def solutionAlghorithm():
         randomY = random.choice([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
         randomCoordinates = [randomX, randomY]
 
-        arrayOfCoordinates.append(randomCoordinates)
+        if not gameBoard.isEmpty(randomCoordinates):
+            arrayOfCoordinates.append(randomCoordinates)
 
-        gameBoard.updateBoard(randomCoordinates)
+            gameBoard.updateBoard(randomCoordinates)
 
-        if not gameBoard.validInput:
-            invalidCount = invalidCount + 1
+            if not gameBoard.isEmpty(randomCoordinates):
+                invalidCount = invalidCount + 1
 
-        if gameBoard.checkForLose() or invalidCount > 100:
-            gameBoard.undoBoard()
-            print('GAME OVER')
-            print(arrayOfCoordinates)
-            arrayOfCoordinates = []
-            invalidCount = 0
+            if gameBoard.checkForLose() or invalidCount > 10000:
 
-        if gameBoard.checkForWin():
-            print('SUCCESS')
-            print(arrayOfCoordinates)
-            searching = False
+                #print('InvalidCount:')
+                print('GAME OVER')
+                newBoard = board(newBoard)
+                gameBoard = newBoard
+                print(gameBoard.getBoard())
+                arrayOfCoordinates = []
+                invalidCount = 0
+
+            if gameBoard.checkForWin():
+                print('SUCCESS')
+                print(arrayOfCoordinates)
+                searching = False
 
 
-solutionAlghorithm()
+game_loop()
