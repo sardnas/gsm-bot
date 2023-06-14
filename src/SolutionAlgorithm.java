@@ -20,16 +20,16 @@ public class SolutionAlgorithm {
                 board.setBoard(randomCoordinates);
                 moves.add(randomCoordinates);
                 if(board.checkForLose()){
-                    printBoard();
+                    //printBoard();
                     board.resetBoard();
                     moves.clear();
                 }
                 if(board.checkForWin()){
-                    printBoard();
+                    //printBoard();
                     return moves;
                 }
             }else{
-                printBoard();
+                //printBoard();
                 board.resetBoard();
                 moves.clear();
             }
@@ -53,13 +53,6 @@ public class SolutionAlgorithm {
     }
 
     private int[] getRandomCoordinates(){
-        /*
-        Random random = new Random();
-        int[] randomCoordinates = new int[2];
-        randomCoordinates[0] = random.nextInt(MAX);
-        randomCoordinates[1] = random.nextInt(MAX);
-
-         */
         Random random = new Random();
         ArrayList<int[]> clickableList = board.getClickableCoordinates();
         int[] randomCoordinates = new int[2];
