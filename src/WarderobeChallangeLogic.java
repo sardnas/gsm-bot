@@ -11,22 +11,24 @@ public class WarderobeChallangeLogic {
         CLEAR
     }
 
-    Color[][] board = new Color[11][11];
+    Color[][] board = new Color[12][11];
     int[] colorCounter;
     Color[][] initialBoard;
     int[] initialColorCount;
 
-    public WarderobeChallangeLogic(){
+    public WarderobeChallangeLogic(Color[][] theBoard){
+/*
         Color[] initialValues = new Color[4];
         initialValues[0] = Color.PINK;
         initialValues[1] = Color.PURPLE;
         initialValues[2] = Color.GREEN;
         initialValues[3] = Color.BLUE;
         for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board.length; j++){
+            for(int j = 0; j < board[0].length; j++){
                 board[i][j] = initialValues[ThreadLocalRandom.current().nextInt(0, 4)];
             }
-        }
+        }*/
+        board = theBoard;
         initialBoard = copyOfCurrentBoard();
         colorCounter = countColors(board);
         initialColorCount = countColors(board);
@@ -60,7 +62,7 @@ public class WarderobeChallangeLogic {
     public ArrayList<int[]> getClickableCoordinates(){
         ArrayList<int[]> clickableList = new ArrayList<>();
         for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board.length; j++){
+            for(int j = 0; j < board[0].length; j++){
                 if(board[i][j] != Color.CLEAR){
                     // over
                     int[] newCoordOne = new int[2];
@@ -110,7 +112,7 @@ public class WarderobeChallangeLogic {
         int greenCount = 0;
         int blueCount = 0;
         for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board.length; j++){
+            for(int j = 0; j < board[0].length; j++){
                 switch(this.board[i][j]) {
                     case PINK:
                         pinkCount++;
@@ -195,11 +197,11 @@ public class WarderobeChallangeLogic {
         this.board = boardCopy;
     }
 
-    private void moveRight(){
+    private void moveRight() {
         Color[][] boardCopy = copyOfCurrentBoard();
         ArrayList<Integer> emptyColumnCounter = new ArrayList();
 
-        for(int i = 0; i < boardCopy.length; i++) {
+        for(int i = 0; i < boardCopy[0].length; i++) {
             if (boardCopy[boardCopy.length - 1][i] == Color.CLEAR) {
                 emptyColumnCounter.add(i);
             }
@@ -208,8 +210,11 @@ public class WarderobeChallangeLogic {
             boardCopy = moveRightHelper(colummn);
         }
 
+
         this.board = boardCopy;
     }
+
+
 
     private Color[][] moveRightHelper(int xCoordinate){
         Color[][] boardCopy = copyOfCurrentBoard();
@@ -228,8 +233,9 @@ public class WarderobeChallangeLogic {
         return boardCopy;
     }
 
+
     private boolean validCoordinate(int[] coordinate){
-        if(coordinate[0] < 0 || coordinate[0] > 10 || coordinate[1] < 0 || coordinate[1] > 10){
+        if(coordinate[0] < 0 || coordinate[0] > 11 || coordinate[1] < 0 || coordinate[1] > 10){
             return false;
         }
         return true;

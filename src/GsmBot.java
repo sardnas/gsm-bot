@@ -1,20 +1,68 @@
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 
 
 public class GsmBot {
 
-    Map<int[], int[]> coordinateAndScreenPosition = new HashMap<>();
+    CoordinateMapper coordinateMapper = new CoordinateMapper();
 
     public GsmBot() {
 
+    }
+
+    public void naturalMovementToCoordinates(ArrayList<int[]> solutionMoves) throws InterruptedException, AWTException {
+        Robot robot = new Robot();
+        int x1 = 1500;
+        int y1 = 444;
+        int x2;
+        int y2;
+        int t = 500;
+        int n = 4000;
+        int randomX = ThreadLocalRandom.current().nextInt(1000, 1500);
+        int randomY = ThreadLocalRandom.current().nextInt(600, 800);
+        Coordinate coord;
+        for(int i = 0; i < solutionMoves.size(); i++){
+            coord = coordinateMapper.getSecondCoordinate(solutionMoves.get(i)[0],solutionMoves.get(i)[1]);
+            x2 = coord.getX();
+            y2 = coord.getY();
+            mouseGlide(x1, y1, x2, y2, t, n);
+            TimeUnit.SECONDS.sleep(1);
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            mouseGlide(x2, y2, randomX, randomY, t, n);
+            TimeUnit.SECONDS.sleep(ThreadLocalRandom.current().nextInt(1, 3));
+            x1 = randomX;
+            y1 = randomY;
+            randomX = ThreadLocalRandom.current().nextInt(1000, 1500);
+            randomY = ThreadLocalRandom.current().nextInt(600, 800);
+            t = ThreadLocalRandom.current().nextInt(700, 1500);
+        }
+        mouseGlide(x1, y1, 1500, 760, t, n);
+    }
+
+
+    private void mouseGlide(int x1, int y1, int x2, int y2, int t, int n) {
+        try {
+            Robot r = new Robot();
+            double dx = (x2 - x1) / ((double) n);
+            double dy = (y2 - y1) / ((double) n);
+            double dt = t / ((double) n);
+            for (int step = 1; step <= n; step++) {
+                Thread.sleep((int) dt);
+                r.mouseMove((int) (x1 + dx * step), (int) (y1 + dy * step));
+            }
+        } catch (AWTException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public BufferedImage takeScreenShot() throws AWTException {
@@ -24,7 +72,7 @@ public class GsmBot {
         return image;
     }
 
-    public void findGameBoard() throws AWTException, IOException, InterruptedException {
+    public WarderobeChallangeLogic.Color[][] findGameBoard() throws AWTException, IOException, InterruptedException {
         BufferedImage screenShotImage = takeScreenShot();
         System.out.println("Took shot.");
         ArrayList<Integer> leftTopCorner = findStartCoordinate(screenShotImage);
@@ -36,12 +84,13 @@ public class GsmBot {
         WarderobeChallangeLogic.Color[][] initialBoard = createGameBoard(leftTopCorner, screenShotImage);
         System.out.println("Found board.");
         printBoard(initialBoard);
+        return initialBoard;
     }
 
     private void printBoard(WarderobeChallangeLogic.Color[][] board){
         System.out.println("########################################################");
         for(int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board.length; j++) {
+            for (int j = 0; j < board[0].length; j++) {
                 System.out.print(board[i][j]);
                 System.out.print("-");
                 System.out.print(i);
@@ -56,7 +105,7 @@ public class GsmBot {
     }
 
     private WarderobeChallangeLogic.Color[][] createGameBoard(ArrayList<Integer> leftTopCorner, BufferedImage screenShotImage) throws IOException, AWTException, InterruptedException {
-        WarderobeChallangeLogic.Color[][] board = new WarderobeChallangeLogic.Color[11][11];
+        WarderobeChallangeLogic.Color[][] board = new WarderobeChallangeLogic.Color[12][11];
         int[] pinkBubbleArray = new int[20 * 20];
         int[] purpleBubbleArray = new int[20 * 20];
         int[] greenBubbleArray = new int[20 * 20];
@@ -78,68 +127,47 @@ public class GsmBot {
 
         int counter = 0;
 
-        TimeUnit.SECONDS.sleep(3);
-        Robot robot = new Robot();
+        //TimeUnit.SECONDS.sleep(3);
+        //Robot robot = new Robot();
         boolean running = true;
         while (running) {
             //TimeUnit.SECONDS.sleep(1);
             //robot.mouseMove(i,j);
-            System.out.print(xInArray);
+            /*System.out.print(xInArray);
             System.out.print(",");
             System.out.print(yInArray);
             System.out.print("\n");
+            int num = counter;*/
             counter++;
             screenShotImage.getRGB(i, j, 3, 3, rgbPixels, 0, 3);
             if (pixelEqual(rgbPixels, pinkBubbleArray)) {
                 board[yInArray][xInArray] = WarderobeChallangeLogic.Color.PINK;
-                int[] boardCoordinate = new int[2];
-                boardCoordinate[0] = xInArray;
-                boardCoordinate[1] = yInArray;
-                int[] screenCoordinate = new int[2];
-                screenCoordinate[0] = i;
-                screenCoordinate[1] = j;
-                coordinateAndScreenPosition.put(boardCoordinate, screenCoordinate);
+                Coordinate coord2 = new Coordinate(i, j);
+                coordinateMapper.addMapping(yInArray, xInArray, coord2);
             } else if (pixelEqual(rgbPixels, purpleBubbleArray)) {
                 board[yInArray][xInArray] = WarderobeChallangeLogic.Color.PURPLE;
-                int[] boardCoordinate = new int[2];
-                boardCoordinate[0] = xInArray;
-                boardCoordinate[1] = yInArray;
-                int[] screenCoordinate = new int[2];
-                screenCoordinate[0] = i;
-                screenCoordinate[1] = j;
-                coordinateAndScreenPosition.put(boardCoordinate, screenCoordinate);
+                Coordinate coord2 = new Coordinate(i, j);
+                coordinateMapper.addMapping(yInArray, xInArray, coord2);
             } else if (pixelEqual(rgbPixels, greenBubbleArray)) {
                 board[yInArray][xInArray] = WarderobeChallangeLogic.Color.GREEN;
-                int[] boardCoordinate = new int[2];
-                boardCoordinate[0] = xInArray;
-                boardCoordinate[1] = yInArray;
-                int[] screenCoordinate = new int[2];
-                screenCoordinate[0] = i;
-                screenCoordinate[1] = j;
-                coordinateAndScreenPosition.put(boardCoordinate, screenCoordinate);
+                Coordinate coord2 = new Coordinate(i, j);
+                coordinateMapper.addMapping(yInArray, xInArray, coord2);
             } else if (pixelEqual(rgbPixels, blueBubbleArray)) {
                 board[yInArray][xInArray] = WarderobeChallangeLogic.Color.BLUE;
-                int[] boardCoordinate = new int[2];
-                boardCoordinate[0] = xInArray;
-                boardCoordinate[1] = yInArray;
-                int[] screenCoordinate = new int[2];
-                screenCoordinate[0] = i;
-                screenCoordinate[1] = j;
-                coordinateAndScreenPosition.put(boardCoordinate, screenCoordinate);
+                Coordinate coord2 = new Coordinate(i, j);
+                coordinateMapper.addMapping(yInArray, xInArray, coord2);
             } else {
                 board[yInArray][xInArray] = WarderobeChallangeLogic.Color.CLEAR;
             }
 
             i = i + 34;
             xInArray++;
-            if (counter > 11 * 12 - 1) {
-                running = false;
-            } else if (counter % 11 == 0) {
+            if (counter % 11 == 0) {
                 j = j + 34;
                 i = x;
                 xInArray = 0;
                 yInArray++;
-                if(yInArray > 10){
+                if(yInArray > 11){
                     running = false;
                 }
             }

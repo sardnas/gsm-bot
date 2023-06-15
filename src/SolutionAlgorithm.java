@@ -26,6 +26,7 @@ public class SolutionAlgorithm {
                 }
                 if(board.checkForWin()){
                     //printBoard();
+                    board.resetBoard();
                     return moves;
                 }
             }else{
@@ -37,7 +38,7 @@ public class SolutionAlgorithm {
     }
 
     private void printBoard(){
-        for(int i = 0; i < board.getBoard().length; i++) {
+        for(int i = 0; i < board.getBoard()[0].length; i++) {
             for (int j = 0; j < board.getBoard().length; j++) {
                 System.out.print(board.getBoard()[i][j]);
                 System.out.print("-");

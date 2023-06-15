@@ -5,25 +5,46 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
-        GsmBot gsmBot = new GsmBot();
-        TimeUnit.SECONDS.sleep(3);
-        gsmBot.findGameBoard();
+    private static void printBoard(WarderobeChallangeLogic.Color[][] board){
+        System.out.println("########################################################");
+        for(int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                System.out.print(board[i][j]);
+                System.out.print("-");
+                System.out.print(i);
+                System.out.print(",");
+                System.out.print(j);
+                System.out.print("      ");
+            }
+            System.out.print("\n");
+            System.out.print("\n");
+        }
+        System.out.println("########################################################");
+    }
 
+    public static void main(String[] args) throws Exception {
 /*
         WarderobeChallangeLogic board = new WarderobeChallangeLogic();
-        SolutionAlgorithm solutionAlgorithm = new SolutionAlgorithm(board);
-        ArrayList<int[]> solutionMoves = solutionAlgorithm.getSolutionMoves();
+        printBoard(board.getBoard());
+        SolutionAlgorithm alg = new SolutionAlgorithm(board);
+        for ( int[] move: alg.getSolutionMoves()
+             ) {
+            board.setBoard(move);
+            printBoard(board.getBoard());
+            TimeUnit.SECONDS.sleep(1);
+        };*/
 
-        System.out.println("WIN WITH FOLLOWING MOVES");
-        for(int i = 0; i < solutionMoves.size(); i++){
-            System.out.print(solutionMoves.get(i)[0]);
-            System.out.print(",");
-            System.out.print(solutionMoves.get(i)[1]);
-            System.out.print("  ");
-            }
+        int levels = 10;
+        for(int i = 0; i < levels; i++){
+            TimeUnit.SECONDS.sleep(5);
+            GsmBot gsmBot = new GsmBot();
+            WarderobeChallangeLogic.Color[][] theBoardFromScreen = gsmBot.findGameBoard();
+            WarderobeChallangeLogic boardLogic = new WarderobeChallangeLogic(theBoardFromScreen);
+            SolutionAlgorithm solutionAlgorithm = new SolutionAlgorithm(boardLogic);
+            ArrayList<int[]> solutionMoves = solutionAlgorithm.getSolutionMoves();
+            gsmBot.naturalMovementToCoordinates(solutionMoves);
+        }
 
-*/
 /*
 
         TimeUnit.SECONDS.sleep(3);
