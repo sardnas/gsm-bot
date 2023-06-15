@@ -6,7 +6,11 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        GsmBot gsmBot = new GsmBot();
+        TimeUnit.SECONDS.sleep(3);
+        gsmBot.findGameBoard();
 
+/*
         WarderobeChallangeLogic board = new WarderobeChallangeLogic();
         SolutionAlgorithm solutionAlgorithm = new SolutionAlgorithm(board);
         ArrayList<int[]> solutionMoves = solutionAlgorithm.getSolutionMoves();
@@ -19,14 +23,14 @@ public class Main {
             System.out.print("  ");
             }
 
-
+*/
 /*
 
         TimeUnit.SECONDS.sleep(3);
         GsmBot gsmBot = new GsmBot();
         BufferedImage screenShot = gsmBot.takeScreenShot();
         ArrayList<Integer> match = gsmBot.findStartCoordinate(screenShot);
-*/
+
         int x = 810 + 30;
         int y = 329;
         int i = x;
@@ -52,6 +56,8 @@ public class Main {
             }
 
         }
+        */
+
     }
 
 }
