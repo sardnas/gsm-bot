@@ -19,10 +19,14 @@ public class GsmBot {
     }
 
     public void naturalMovementToCoordinates(ArrayList<int[]> solutionMoves) throws InterruptedException, AWTException {
+        PointerInfo a = MouseInfo.getPointerInfo();
+        Point b = a.getLocation();
+        int c = (int) b.getX();
+        int d = (int) b.getY();
         Robot robot = new Robot();
         Random rand = new Random();
         int x1 = 1500;
-        int y1 = 444;
+        int y1 = 760;
         int x2;
         int y2;
         int t = 1000;
@@ -30,6 +34,7 @@ public class GsmBot {
         int randomX = rand.nextInt(1700 - 1200 + 1) + 1200;
         int randomY = rand.nextInt(450 - 350 + 1) + 350;
         Coordinate coord;
+        mouseGlide(c, d, 1500, 760, t, n);
         for(int i = 0; i < solutionMoves.size(); i++){
             coord = coordinateMapper.getSecondCoordinate(solutionMoves.get(i)[0],solutionMoves.get(i)[1]);
             x2 = coord.getX();
@@ -43,7 +48,7 @@ public class GsmBot {
             //TimeUnit.SECONDS.sleep(ThreadLocalRandom.current().nextInt(1, 3));
             x1 = randomX;
             y1 = randomY;
-            randomX = rand.nextInt(1700 - 1200 + 1) + 1200;
+            randomX = rand.nextInt(1150 - 900 + 1) + 900;
             randomY = rand.nextInt(450 - 350 + 1) + 350;
             t = rand.nextInt(2000 - 1000 + 1) + 1000;
         }
