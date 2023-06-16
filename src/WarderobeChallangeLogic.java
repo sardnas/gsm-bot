@@ -197,6 +197,40 @@ public class WarderobeChallangeLogic {
         this.board = boardCopy;
     }
 
+    private void moveRights() {
+        Color[][] boardCopy = copyOfCurrentBoard();
+        int rows = boardCopy.length;
+        int cols = boardCopy[0].length;
+        ArrayList<Integer> emptyCols = new ArrayList<>();
+
+        // Check if the last row is entirely clear
+        boolean isLastRowClear = false;
+        for (int j = cols - 1; j > 0; j--) {
+            if (boardCopy[rows - 1][j] == Color.CLEAR) {
+                isLastRowClear = true;
+                emptyCols.add(j);
+            }
+        }
+
+        if (isLastRowClear) {
+            // Move each column to the left by shifting all cells one step to the right
+            for (int j = cols - 1; j > 0; j--) {
+                for (int i = 0; i < rows; i++) {
+                    boardCopy[i][j] = boardCopy[i][j - 1];
+                }
+            }
+
+            // Clear the first column
+            for (int i = 0; i < rows; i++) {
+                boardCopy[i][0] = Color.CLEAR;
+            }
+        }
+
+        this.board = boardCopy;
+    }
+
+
+
     private void moveRight() {
         Color[][] boardCopy = copyOfCurrentBoard();
         ArrayList<Integer> emptyColumnCounter = new ArrayList();
@@ -206,12 +240,10 @@ public class WarderobeChallangeLogic {
                 emptyColumnCounter.add(i);
             }
         }
-        for (int colummn : emptyColumnCounter) {
-            boardCopy = moveRightHelper(colummn);
+        for (int column : emptyColumnCounter) {
+            boardCopy = moveRightHelper(column);
+            this.board = boardCopy;
         }
-
-
-        this.board = boardCopy;
     }
 
 
@@ -219,17 +251,42 @@ public class WarderobeChallangeLogic {
     private Color[][] moveRightHelper(int xCoordinate){
         Color[][] boardCopy = copyOfCurrentBoard();
 
-        for(int i = 0; i < boardCopy.length; i++){
-            for(int j = 0; j < xCoordinate; j++){
-                boardCopy[i][j] = Color.CLEAR;
+        if(xCoordinate != 10){
+            for(int i = 0; i < xCoordinate; i++){
+                for(int j = 0; j < boardCopy.length ; j++){
+                    boardCopy[j][i] = Color.CLEAR;
+                }
+            }
+            for(int i = 0; i < xCoordinate; i++){
+                for(int j = 0; j < boardCopy.length; j++){
+                    boardCopy[j][i + 1] = board[j][i];
+                }
+            }
+        }else{
+            for(int i = 0; i < xCoordinate; i++){
+                for(int j = 0; j < boardCopy.length ; j++){
+                    boardCopy[j][i] = Color.CLEAR;
+                }
+            }
+            for(int i = 1; i < xCoordinate; i++){
+                for(int j = 0; j < boardCopy.length; j++){
+                    boardCopy[j][i] = board[j][i - 1];
+                }
             }
         }
-        for(int i = 0; i < boardCopy.length; i++){
-            for(int j = 0; j < xCoordinate; j++){
-                boardCopy[i][j + 1] = board[i][j];
+/*
+        // Move each column to the left by shifting all cells one step to the right
+        for (int j = cols - 1; j > 0; j--) {
+            for (int i = 0; i < rows; i++) {
+                boardCopy[i][j] = boardCopy[i][j - 1];
             }
         }
 
+        // Clear the first column
+        for (int i = 0; i < rows; i++) {
+            boardCopy[i][0] = Color.CLEAR;
+        }
+*/
         return boardCopy;
     }
 

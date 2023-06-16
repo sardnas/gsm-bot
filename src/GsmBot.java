@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
@@ -19,50 +20,49 @@ public class GsmBot {
 
     public void naturalMovementToCoordinates(ArrayList<int[]> solutionMoves) throws InterruptedException, AWTException {
         Robot robot = new Robot();
+        Random rand = new Random();
         int x1 = 1500;
         int y1 = 444;
         int x2;
         int y2;
-        int t = 500;
+        int t = 1000;
         int n = 4000;
-        int randomX = ThreadLocalRandom.current().nextInt(1000, 1500);
-        int randomY = ThreadLocalRandom.current().nextInt(600, 800);
+        int randomX = rand.nextInt(1700 - 1200 + 1) + 1200;
+        int randomY = rand.nextInt(450 - 350 + 1) + 350;
         Coordinate coord;
         for(int i = 0; i < solutionMoves.size(); i++){
             coord = coordinateMapper.getSecondCoordinate(solutionMoves.get(i)[0],solutionMoves.get(i)[1]);
             x2 = coord.getX();
             y2 = coord.getY();
             mouseGlide(x1, y1, x2, y2, t, n);
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.MILLISECONDS.sleep(rand.nextInt(300 - 200 + 1) + 200);
             robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+            TimeUnit.MILLISECONDS.sleep(rand.nextInt(600 - 300 + 1) + 300);
             mouseGlide(x2, y2, randomX, randomY, t, n);
-            TimeUnit.SECONDS.sleep(ThreadLocalRandom.current().nextInt(1, 3));
+            //TimeUnit.SECONDS.sleep(ThreadLocalRandom.current().nextInt(1, 3));
             x1 = randomX;
             y1 = randomY;
-            randomX = ThreadLocalRandom.current().nextInt(1000, 1500);
-            randomY = ThreadLocalRandom.current().nextInt(600, 800);
-            t = ThreadLocalRandom.current().nextInt(700, 1500);
+            randomX = rand.nextInt(1700 - 1200 + 1) + 1200;
+            randomY = rand.nextInt(450 - 350 + 1) + 350;
+            t = rand.nextInt(2000 - 1000 + 1) + 1000;
         }
         mouseGlide(x1, y1, 1500, 760, t, n);
     }
 
 
-    private void mouseGlide(int x1, int y1, int x2, int y2, int t, int n) {
-        try {
+    private void mouseGlide(int x1, int y1, int x2, int y2, int t, int n) throws InterruptedException, AWTException {
+
             Robot r = new Robot();
             double dx = (x2 - x1) / ((double) n);
             double dy = (y2 - y1) / ((double) n);
             double dt = t / ((double) n);
             for (int step = 1; step <= n; step++) {
-                Thread.sleep((int) dt);
+                TimeUnit.MILLISECONDS.sleep((int) dt);
+                //Thread.sleep((int) dt);
                 r.mouseMove((int) (x1 + dx * step), (int) (y1 + dy * step));
             }
-        } catch (AWTException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public BufferedImage takeScreenShot() throws AWTException {
@@ -226,7 +226,7 @@ public class GsmBot {
                 }
             }
         }
-        System.out.println(matchScore);
+        //System.out.println(matchScore);
         if(matchScore > 50){
             return true;
         }

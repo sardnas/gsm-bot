@@ -34,17 +34,28 @@ public class Main {
             TimeUnit.SECONDS.sleep(1);
         };*/
 
-        int levels = 10;
-        for(int i = 0; i < levels; i++){
-            TimeUnit.SECONDS.sleep(5);
-            GsmBot gsmBot = new GsmBot();
-            WarderobeChallangeLogic.Color[][] theBoardFromScreen = gsmBot.findGameBoard();
-            WarderobeChallangeLogic boardLogic = new WarderobeChallangeLogic(theBoardFromScreen);
-            SolutionAlgorithm solutionAlgorithm = new SolutionAlgorithm(boardLogic);
-            ArrayList<int[]> solutionMoves = solutionAlgorithm.getSolutionMoves();
-            gsmBot.naturalMovementToCoordinates(solutionMoves);
-        }
+        int levels = 3;
 
+        TimeUnit.SECONDS.sleep(3);
+        GsmBot gsmBot = new GsmBot();
+        WarderobeChallangeLogic.Color[][] theBoardFromScreen = gsmBot.findGameBoard();
+        WarderobeChallangeLogic boardLogic = new WarderobeChallangeLogic(theBoardFromScreen);
+        SolutionAlgorithm solutionAlgorithm = new SolutionAlgorithm(boardLogic);
+        ArrayList<int[]> solutionMoves = solutionAlgorithm.getSolutionMoves();
+
+
+        for ( int[] move: solutionMoves
+        ) {
+            boardLogic.setBoard(move);
+            printBoard(boardLogic.getBoard());
+            TimeUnit.SECONDS.sleep(1);
+        };
+
+        /*
+
+gsmBot.naturalMovementToCoordinates(solutionMoves);
+        System.out.println("Finished the level.");
+ */
 /*
 
         TimeUnit.SECONDS.sleep(3);
