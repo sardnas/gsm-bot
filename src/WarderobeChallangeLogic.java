@@ -252,7 +252,7 @@ public class WarderobeChallangeLogic {
         Color[][] boardCopy = copyOfCurrentBoard();
 
         if(xCoordinate != 10){
-            for(int i = 0; i < xCoordinate; i++){
+            for(int i = 0; i <= xCoordinate; i++){
                 for(int j = 0; j < boardCopy.length ; j++){
                     boardCopy[j][i] = Color.CLEAR;
                 }
@@ -263,12 +263,12 @@ public class WarderobeChallangeLogic {
                 }
             }
         }else{
-            for(int i = 0; i < xCoordinate; i++){
+            for(int i = 0; i <= xCoordinate; i++){
                 for(int j = 0; j < boardCopy.length ; j++){
                     boardCopy[j][i] = Color.CLEAR;
                 }
             }
-            for(int i = 1; i < xCoordinate; i++){
+            for(int i = 1; i <= xCoordinate; i++){
                 for(int j = 0; j < boardCopy.length; j++){
                     boardCopy[j][i] = board[j][i - 1];
                 }

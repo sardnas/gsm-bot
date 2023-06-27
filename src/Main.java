@@ -34,7 +34,7 @@ public class Main {
             TimeUnit.SECONDS.sleep(1);
         };*/
 
-        int levels = 17;
+        int levels = 20;
 
         for(int i = 0; i < levels; i++){
             TimeUnit.SECONDS.sleep(4);

@@ -30,29 +30,29 @@ public class GsmBot {
         int x2;
         int y2;
         int t = 1000;
-        int n = 4000;
+        int n = 4500;
         int randomX = rand.nextInt(1700 - 1200 + 1) + 1200;
         int randomY = rand.nextInt(450 - 350 + 1) + 350;
         Coordinate coord;
-        mouseGlide(c, d, 1500, 760, t, n);
+        mouseGlide(c, d, 1350, 700, t, n);
         for(int i = 0; i < solutionMoves.size(); i++){
             coord = coordinateMapper.getSecondCoordinate(solutionMoves.get(i)[0],solutionMoves.get(i)[1]);
             x2 = coord.getX();
             y2 = coord.getY();
             mouseGlide(x1, y1, x2, y2, t, n);
-            TimeUnit.MILLISECONDS.sleep(rand.nextInt(300 - 200 + 1) + 200);
+            TimeUnit.MILLISECONDS.sleep(rand.nextInt(300 - 100 + 1) + 100);
             robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-            TimeUnit.MILLISECONDS.sleep(rand.nextInt(600 - 300 + 1) + 300);
-            mouseGlide(x2, y2, randomX, randomY, t, n);
-            //TimeUnit.SECONDS.sleep(ThreadLocalRandom.current().nextInt(1, 3));
-            x1 = randomX;
-            y1 = randomY;
-            randomX = rand.nextInt(1150 - 900 + 1) + 900;
-            randomY = rand.nextInt(450 - 350 + 1) + 350;
-            t = rand.nextInt(2000 - 1000 + 1) + 1000;
+            TimeUnit.MILLISECONDS.sleep(rand.nextInt(800 - 500 + 1) + 500);
+            x1 = x2 + randomX;
+            y1 = y2 + randomY;
+            randomX = rand.nextInt(70 - 50 + 1) + 50;
+            randomY = rand.nextInt(60 - 30 + 1) + 30;
+            mouseGlide(x2, y2, x1, y1, t, n);
+            //TimeUnit.MILLISECONDS.sleep(rand.nextInt(300 - 100 + 1) + 100);
+            t = rand.nextInt(2000 - 1000 + 1) + 2000;
         }
-        mouseGlide(x1, y1, 1500, 760, t, n);
+        mouseGlide(x1, y1, 1350, 700, t, n);
     }
 
 
